@@ -12,4 +12,4 @@ action:
 	docker exec sigasu /usr/local/bin/$(action) 
 
 run:
-	docker run -i -v /home/agimenez/postgres/:/var/lib/postgresql -p 5432:5432 -e POSTGRESQL_USER=sigasu -e POSTGRESQL_PASS="\$igMunicipal2016" -e POSTGRESQL_DB=catastro --name sigasu postgresql-8.4
+	docker run -i -v /home/agimenez/postgres/:/var/lib/postgresql -p 5432:5432 -e POSTGRESQL_USER=sigasu -e POSTGRESQL_PASS="SigMunicipal2016" -e POSTGRESQL_DB=catastro --name sigasu postgresql-8.4
