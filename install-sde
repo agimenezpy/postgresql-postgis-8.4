@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e 
+
+POSTGRESQL_USER=${POSTGRESQL_USER:-"docker"}
+POSTGRESQL_PASS=${POSTGRESQL_PASS:-"docker"}
+POSTGRESQL_DB=${POSTGRESQL_DB:-"docker"}
+SDE_LICENCE=${SDE_LICENCE:-"$1"}
+
+SDE_BASE_DIR=/opt/arcsde
+SDE_DIR=$SDE_BASE_DIR/sdeexe100
+
+if [ ! -z "$SDE_LICENCE" ]; then 
+
+    export LD_LIBRARY_PATH=$SDE_DIR/lib/;
+
+    $SDE_DIR/bin/sdesetup -o install -d POSTGRESQL -u sde -p sde4dmin -D $POSTGRESQL_DB -l $SDE_LICENCE -H $SDE_DIR -s localhost;
+    #$SDE_DIR/bin/sdedbtune -o alter -k DEFAULTS -P RASTER_STORAGE -v ST_RASTER -u sde -p sde4dmin -D $POSTGRESQL_DB
+    #$SDE_DIR/bin/sdedbtune -o alter -k DEFAULTS -P GEOMETRY_STORAGE -v PG_GEOMETRY -u sde -p sde4dmin -D $POSTGRESQL_DB;
+
+fi

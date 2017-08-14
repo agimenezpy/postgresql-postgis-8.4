@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e 
+
+POSTGRESQL_BIN=/usr/lib/postgresql/8.4/bin/psql
+POSTGRESQL_SINGLE="sudo -u postgres $POSTGRESQL_BIN "
+
+$POSTGRESQL_SINGLE postgres <<< "CREATE DATABASE template_postgis OWNER postgres;" > /dev/null
+$POSTGRESQL_SINGLE postgres <<< "UPDATE pg_database SET datistemplate=true WHERE datname='template_postgis'" > /dev/null
+
+$POSTGRESQL_SINGLE template_postgis <<< "CREATE LANGUAGE 'plpgsql' HANDLER plpgsql_call_handler VALIDATOR plpgsql_validator;" > /dev/null
+$POSTGRESQL_SINGLE template_postgis < /usr/share/postgresql/8.4/contrib/postgis-1.5/postgis.sql  > /dev/null
+$POSTGRESQL_SINGLE template_postgis < /usr/share/postgresql/8.4/contrib/postgis-1.5/spatial_ref_sys.sql  > /dev/null
+
